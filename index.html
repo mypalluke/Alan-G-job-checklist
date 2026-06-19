@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holland Family Home Services - Project Checklist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #faf9f6; /* Premium warm natural background */
+            color: #1c1917; /* Soft near-black stone */
+        }
+        /* Custom styled smooth transitions */
+        .fade-transition {
+            transition: all 0.25s ease-in-out;
+        }
+        /* Smooth scale-in animation */
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .scale-in {
+            animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-16">
+
+    <!-- Top Branding Banner -->
+    <header class="bg-stone-900 text-stone-100 shadow-md">
+        <div class="max-w-5xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 text-teal-400 text-xs font-bold uppercase tracking-widest mb-1">
+                        <span>🛠️ HOLLAND FAMILY HOME SERVICES</span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Project Execution Checklist</h1>
+                </div>
+                <div class="bg-stone-800 border border-stone-700 rounded-xl p-3 md:text-right">
+                    <p class="text-xs text-stone-400 font-bold uppercase tracking-wider">Client & Location</p>
+                    <p class="text-sm font-semibold text-stone-200 mt-0.5">Alan Gutierrez</p>
+                    <p class="text-xs text-stone-400 mt-0.5">35 Serenity Pointe Dr, Murphy, NC</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        
+        <!-- Interactive Master Progress & Control Center -->
+        <section class="bg-white rounded-2xl shadow-sm border border-stone-200/80 p-6 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                
+                <!-- Circular/Percentage Progress Gauge -->
+                <div class="flex items-center gap-4 border-b md:border-b-0 md:border-r border-stone-100 pb-4 md:pb-0 md:pr-6">
+                    <div class="relative flex items-center justify-center w-20 h-20 bg-teal-50 rounded-full border border-teal-100 shrink-0">
+                        <span id="overall-percentage" class="text-2xl font-black text-teal-700">0%</span>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-stone-800">Overall Progress</h2>
+                        <p class="text-xs text-stone-500 mt-1"><span id="completed-count">0</span> of <span id="total-count">0</span> items packed & verified</p>
+                        <p class="text-[10px] bg-teal-100 text-teal-800 font-bold uppercase tracking-wider rounded-md px-1.5 py-0.5 mt-2 inline-block">High-Reach Staining</p>
+                    </div>
+                </div>
+
+                <!-- Live Progress Bar & Active Phase Indicator -->
+                <div class="md:col-span-2 flex flex-col justify-between h-full">
+                    <div class="w-full bg-stone-100 rounded-full h-3 mb-4 overflow-hidden relative border border-stone-200/50">
+                        <div id="progress-bar-fill" class="bg-gradient-to-r from-teal-500 to-emerald-600 h-full w-0 rounded-full transition-all duration-500"></div>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <!-- Dynamic View Filters -->
+                        <div class="flex bg-stone-100 p-1 rounded-lg border border-stone-200 text-xs">
+                            <button onclick="changeFilter('all')" id="filter-all" class="px-3 py-1.5 font-bold rounded-md bg-white shadow text-teal-700 transition-all">All Tasks</button>
+                            <button onclick="changeFilter('pending')" id="filter-pending" class="px-3 py-1.5 font-bold rounded-md text-stone-600 hover:text-stone-900 transition-all">Pending</button>
+                            <button onclick="changeFilter('completed')" id="filter-completed" class="px-3 py-1.5 font-bold rounded-md text-stone-600 hover:text-stone-900 transition-all">Completed</button>
+                        </div>
+
+                        <!-- Reset Progress Button Triggering Modal -->
+                        <button onclick="openResetModal()" class="text-xs font-bold text-stone-400 hover:text-red-500 transition-colors uppercase tracking-wider bg-stone-50 hover:bg-red-50 px-3 py-2 rounded-lg border border-stone-200 hover:border-red-200">
+                            🔄 Reset Progress
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Quick Phase Selection Buttons -->
+        <section class="mb-6">
+            <h3 class="text-xs font-bold text-stone-500 uppercase tracking-widest mb-3">Quick Navigation Jump</h3>
+            <div class="flex flex-wrap gap-2" id="nav-tabs">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- Active View / Main Checklists List -->
+        <section id="checklist-container" class="space-y-6">
+            <!-- Dynamically Rendered Checklist Categories, Subsections, and List Items -->
+        </section>
+
+        <!-- Dynamic On-Site Notes Area -->
+        <section class="mt-8 bg-stone-100 border border-stone-200 rounded-2xl p-6">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="text-lg">📝</span>
+                <h3 class="text-sm font-bold text-stone-800 uppercase tracking-wider">Active On-Site Project Notes</h3>
+            </div>
+            <p class="text-xs text-stone-500 mb-3">Use this notepad to log structural notes, tool configurations, or details for your helper. Saves automatically to your browser.</p>
+            <textarea id="onsite-notes" oninput="saveNotes()" rows="4" placeholder="Type structural notes or reminders here (e.g., 'Double-check the leg extension heights for back deck slope before lifting scaffold' ...)" class="w-full text-sm bg-white border border-stone-300 rounded-xl p-4 focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none shadow-inner text-stone-800"></textarea>
+        </section>
+
+    </main>
+
+    <!-- Custom Premium Reset Confirmation Modal -->
+    <div id="reset-modal" class="fixed inset-0 bg-stone-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-xl border border-stone-200 max-w-sm w-full p-6 scale-in">
+            <div class="text-center">
+                <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4 border border-red-100 text-xl font-bold">
+                    ⚠️
+                </div>
+                <h3 class="text-lg font-bold text-stone-900">Reset Your Progress?</h3>
+                <p class="text-sm text-stone-500 mt-2">This action will clear all checkmarks from the Alan Gutierrez checklist. This cannot be undone.</p>
+            </div>
+            <div class="mt-6 flex gap-3">
+                <button onclick="closeResetModal()" class="flex-1 px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 font-semibold rounded-xl text-sm transition-colors">
+                    Keep Progress
+                </button>
+                <button onclick="resetChecklist()" class="flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl text-sm transition-colors">
+                    Reset All
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Javascript Data & Logic -->
+    <script>
+        // Loaded checklist definitions verbatim from project_checklist.md
+        const checklistData = {
+            title: "Project Execution Checklist",
+            client: "Alan Gutierrez",
+            location: "35 Serenity Pointe Dr, Murphy, NC",
+            phases: [
+                {
+                    id: "phase1",
+                    title: "Phase 1: High-Reach Setup, Scaffolding & Ladder Rigging",
+                    emoji: "🪜",
+                    desc: "Alan's home has high-reach ceilings and gables on steep terrain. Day 1 is all about safe access and rigging.",
+                    subsections: [
+                        {
+                            title: "Scaffolding Setup (Back Porch Ceilings)",
+                            items: [
+                                { id: "p1_s1_1", text: "Baker’s Scaffold Frames: Complete set of high-clearance scaffold sections" },
+                                { id: "p1_s1_2", text: "Scaffold Walkboards: Heavy-duty aluminum or wood platforms (inspected for cracks/damage)" },
+                                { id: "p1_s1_3", text: "Rigging Hardware: Coupling pins, locking spring pins, and cross braces" },
+                                { id: "p1_s1_4", text: "Safety Rails & Outriggers: Guardrail set (required for high-level safety) and outrigger stabilizers" },
+                                { id: "p1_s1_5", text: "Casters & Base Plates: Locking caster wheels for flat areas, adjustable leveling jacks/base plates for uneven soil" },
+                                { id: "p1_s1_6", text: "Scaffold Leveling Pads: Thick wood blocks/mudsills to support scaffold legs on steep mountain dirt" }
+                            ]
+                        },
+                        {
+                            title: "Ladders & Steep-Terrain Safety",
+                            items: [
+                                { id: "p1_s2_1", text: "Extension Ladders: 24ft, 28ft, and 32ft extension ladders (inspected for structural integrity)" },
+                                { id: "p1_s2_2", text: "Ladder Levelers: Bolt-on adjustable legs (essential for stabilizing ladders on Murphy's steep mountain slopes)" },
+                                { id: "p1_s2_3", text: "Ladder Standoffs / Stabilizers: To bridge across window spans and prevent denting gutters/soffits" },
+                                { id: "p1_s2_4", text: "Ladder Mitts: Soft rubber caps for ladder tops to prevent scratching Alan's siding" },
+                                { id: "p1_s2_5", text: "Safety Harnesses & Lanyards: For high-peak gable work if tying off is necessary" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "phase2",
+                    title: "Phase 2: Prep, Scraping & Eaves Washing",
+                    emoji: "🧼",
+                    desc: "Prep is 90% of the battle on high-reach trim. It must be clean and smooth before any stain touches it.",
+                    subsections: [
+                        {
+                            title: "Cleaning & Soft Washing",
+                            items: [
+                                { id: "p2_s1_1", text: "Pressure Washer / Rinsing Unit: For washing dirt, spiderwebs, and pollen off the high eaves" },
+                                { id: "p2_s1_2", text: "Soft Wash Chemicals: Bleach/SH solution or mild TSP wood cleaner to kill mildew under the dark eaves" },
+                                { id: "p2_s1_3", text: "Chemical Applicator: Pump-up sprayer or down-stream injector line" },
+                                { id: "p2_s1_4", text: "Scrub Brushes: Stiff-bristle brushes with threaded extension pole adapters" },
+                                { id: "p2_s1_5", text: "Hoses: Sufficient length of garden hose (minimum 150 ft) to wrap around the steep perimeter of the home" }
+                            ]
+                        },
+                        {
+                            title: "Hand Prep & Wood Patching",
+                            items: [
+                                { id: "p2_s2_1", text: "Scrapers & Wire Brushes: Heavy-duty paint scrapers for peeling stain or loose wood fibers on gables" },
+                                { id: "p2_s2_2", text: "Sanding Gear: Sanding sponges (medium and fine grit) and an orbital sander with backup discs for rough trim edges" },
+                                { id: "p2_s2_3", text: "Caulking Guns: High-thrust caulking guns" },
+                                { id: "p2_s2_4", text: "Prep Supplies: Utility knives, wire brushes, putty knives, and a duster brush to clear sanding dust before coating" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "phase3",
+                    title: "Phase 3: Site Protection & Precision Masking",
+                    emoji: "🛡️",
+                    desc: "Because you are staining high-reach ceilings and eaves, gravity is your enemy. Everything below must be completely protected.",
+                    subsections: [
+                        {
+                            title: "Masking Materials (Provided by Luke)",
+                            items: [
+                                { id: "p3_s1_1", text: "Drop Cloths: Plenty of heavy canvas drop cloths (canvas is critical for porch decks so you don't slip on plastic)" },
+                                { id: "p3_s1_2", text: "Plastic Sheeting: 1-mil painter's plastic to cover windows, lower stone facade, siding, and porch light fixtures" },
+                                { id: "p3_s1_3", text: "Masking Paper: 9\" or 12\" brown masking paper for running borders" },
+                                { id: "p3_s1_4", text: "Hand Masker Tool: For quick, efficient window and trim masking" },
+                                { id: "p3_s1_5", text: "Painter's Tape (Blue): Blue exterior-grade tape (multi-day release)" },
+                                { id: "p3_s1_6", text: "Painter's Tape (Orange): Orange high-adhesion tape (for sticking to rough stone or masonry)" }
+                            ]
+                        },
+                        {
+                            title: "Cardboard Spray/Drip Shields",
+                            items: [
+                                { id: "p3_s2_1", text: "Cardboard Shields: Handheld cardboard or metal paint shields to hold against rooflines, metal roofing, or shingles to protect from overspray/drips" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "phase4",
+                    title: "Phase 4: Staining Application",
+                    emoji: "🎨",
+                    desc: "All stain and wood-prep coatings are supplied by Alan. Double-check that he has the correct products on-site before starting.",
+                    subsections: [
+                        {
+                            title: "Material Verification (Supplied by Alan)",
+                            items: [
+                                { id: "p4_s1_1", text: "Exterior Stain: Ensure the right amount/sheen of stain is on-site (oil or water-based)" },
+                                { id: "p4_s1_2", text: "Exterior Caulk/Sealant: High-grade exterior caulking matching trim color" },
+                                { id: "p4_s1_3", text: "Primers/Sealants: Special blocking primer if staining bare cedar or pine gables to prevent tannin bleed-through" }
+                            ]
+                        },
+                        {
+                            title: "Application Tools (Supplied by Luke)",
+                            items: [
+                                { id: "p4_s2_1", text: "Brushes (3\" & 4\" block): 3\" and 4\" block brushes (holds a lot of stain, great for rough porch ceilings)" },
+                                { id: "p4_s2_2", text: "Brushes (2.5\" angled sash): 2.5\" stiff-angled sash brushes for precise cut-in lines on high gables" },
+                                { id: "p4_s2_3", text: "Rollers & Covers (Adjustable poles): 9\" roller frames and extension poles (adjustable 4'-8' and 6'-12' for scaffold ceiling work)" },
+                                { id: "p4_s2_4", text: "Roller Covers (Thick nap): Roller covers with thick nap (3/4\" or 1\" for rough-cut wood ceiling textures)" },
+                                { id: "p4_s2_5", text: "Stain Buckets & Grids: 5-gallon paint buckets and metal grids for loading rollers efficiently" },
+                                { id: "p4_s2_6", text: "Cleanup Materials (Solvents): Solvent/Water according to the stain type (Mineral spirits/paint thinner for oil; water and soap for latex/acrylic)" },
+                                { id: "p4_s2_7", text: "Cleanup Supplies (Tools/Rags): Rags, scrub sponges, and wire brush comb for cleaning brushes at the end of the day" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: "phase5",
+                    title: "Safety, Comfort & Helper Logistics",
+                    emoji: "🚑",
+                    desc: "High-reach work on mountain slopes is physically demanding. Keep the site comfortable and safe.",
+                    subsections: [
+                        {
+                            title: "On-Site Safety & Logistics Requirements",
+                            items: [
+                                { id: "p5_s1_1", text: "First Aid Kit: Equipped with plenty of saline eyewash (critical when brushing stain overhead on scaffolding)" },
+                                { id: "p5_s1_2", text: "Safety Glasses: Wrap-around clear lenses for overhead stain protection" },
+                                { id: "p5_s1_3", text: "Hard Hats: Required for the helper when working beneath the scaffolding" },
+                                { id: "p5_s1_4", text: "Hydration: Plenty of cool water (mountain slopes get warm, and scaffold work is hard cardio)" },
+                                { id: "p5_s1_5", text: "Extension Cords: Heavy-duty outdoor cords for pressure washer, sanders, and tools" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        let currentFilter = 'all'; // 'all' | 'pending' | 'completed'
+        let currentActiveTab = 'all'; // 'all' | 'phase1' | 'phase2' | etc.
+        let localState = {};
+
+        // Load local state configuration
+        function loadState() {
+            const saved = localStorage.getItem('holland_alan_state');
+            if (saved) {
+                localState = JSON.parse(saved);
+            } else {
+                // Initialize default false state for every item
+                checklistData.phases.forEach(phase => {
+                    phase.subsections.forEach(sub => {
+                        sub.items.forEach(item => {
+                            localState[item.id] = false;
+                        });
+                    });
+                });
+                saveState();
+            }
+
+            const savedNotes = localStorage.getItem('holland_alan_notes');
+            if (savedNotes) {
+                document.getElementById('onsite-notes').value = savedNotes;
+            }
+        }
+
+        // Save active state configuration
+        function saveState() {
+            localStorage.setItem('holland_alan_state', JSON.stringify(localState));
+        }
+
+        function saveNotes() {
+            const notesText = document.getElementById('onsite-notes').value;
+            localStorage.setItem('holland_alan_notes', notesText);
+        }
+
+        // Generate dynamic Quick Navigation Jump Tabs
+        function renderNavigationTabs() {
+            const container = document.getElementById('nav-tabs');
+            container.innerHTML = '';
+
+            // Add Master All Tab
+            const masterTab = document.createElement('button');
+            masterTab.onclick = () => selectTab('all');
+            masterTab.id = 'tab-all';
+            masterTab.className = `px-3 py-1.5 rounded-lg text-xs font-bold border ${currentActiveTab === 'all' ? 'bg-teal-700 border-teal-700 text-white shadow-sm' : 'bg-white border-stone-200 text-stone-600 hover:border-stone-400'} transition-all`;
+            masterTab.textContent = "📑 View Master List";
+            container.appendChild(masterTab);
+
+            // Add individual Phase Tabs
+            checklistData.phases.forEach(phase => {
+                const btn = document.createElement('button');
+                btn.onclick = () => selectTab(phase.id);
+                btn.id = `tab-${phase.id}`;
+                btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold border ${currentActiveTab === phase.id ? 'bg-teal-700 border-teal-700 text-white shadow-sm' : 'bg-white border-stone-200 text-stone-600 hover:border-stone-400'} transition-all`;
+                btn.textContent = `${phase.emoji} ${phase.title.split(':')[0]}`;
+                container.appendChild(btn);
+            });
+        }
+
+        function selectTab(tabId) {
+            currentActiveTab = tabId;
+            renderNavigationTabs();
+            renderChecklist();
+        }
+
+        function changeFilter(filterType) {
+            currentFilter = filterType;
+            ['all', 'pending', 'completed'].forEach(type => {
+                const btn = document.getElementById(`filter-${type}`);
+                if (type === filterType) {
+                    btn.className = "px-3 py-1.5 font-bold rounded-md bg-white shadow text-teal-700 transition-all";
+                } else {
+                    btn.className = "px-3 py-1.5 font-bold rounded-md text-stone-600 hover:text-stone-900 transition-all";
+                }
+            });
+            renderChecklist();
+        }
+
+        // Toggle checkbox interaction
+        function toggleItem(itemId) {
+            localState[itemId] = !localState[itemId];
+            saveState();
+            
+            // Apply quick visual updates directly before full rerender to prevent layout jumps
+            const row = document.getElementById(`row-${itemId}`);
+            const checkbox = document.getElementById(`check-${itemId}`);
+            const checkIcon = document.getElementById(`icon-${itemId}`);
+            
+            if (row && checkbox) {
+                if (localState[itemId]) {
+                    row.classList.add('bg-stone-50/70', 'opacity-70');
+                    checkbox.classList.replace('border-stone-300', 'bg-teal-600');
+                    checkbox.classList.add('border-teal-600');
+                    if (checkIcon) checkIcon.classList.remove('hidden');
+                } else {
+                    row.classList.remove('bg-stone-50/70', 'opacity-70');
+                    checkbox.classList.replace('bg-teal-600', 'border-stone-300');
+                    checkbox.classList.remove('border-teal-600');
+                    if (checkIcon) checkIcon.classList.add('hidden');
+                }
+            }
+
+            calculateProgress();
+            
+            // If active filter is hide/show completed, full render is needed to hide/show toggled card
+            if (currentFilter !== 'all') {
+                setTimeout(renderChecklist, 200);
+            }
+        }
+
+        // Evaluate all data and generate matching output HTML
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+
+            checklistData.phases.forEach(phase => {
+                // If specific tab selected, hide others
+                if (currentActiveTab !== 'all' && currentActiveTab !== phase.id) return;
+
+                // Build phase container card
+                const phaseCard = document.createElement('div');
+                phaseCard.className = "bg-white border border-stone-200/80 rounded-2xl shadow-sm overflow-hidden transition-all duration-300 mb-6";
+                
+                // Card Header
+                let headerHTML = `
+                    <div class="bg-gradient-to-r from-stone-50 to-stone-100/50 p-6 border-b border-stone-200">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">${phase.emoji}</span>
+                            <h2 class="text-lg font-bold text-stone-800">${phase.title}</h2>
+                        </div>
+                        <p class="text-xs text-stone-500 mt-2 leading-relaxed">${phase.desc}</p>
+                    </div>
+                    <div class="p-6 space-y-6">
+                `;
+
+                let subSectionsHTML = '';
+                let hasVisibleItems = false;
+
+                phase.subsections.forEach(sub => {
+                    // Filter items in the subsection
+                    const filteredItems = sub.items.filter(item => {
+                        const isDone = localState[item.id];
+                        if (currentFilter === 'pending') return !isDone;
+                        if (currentFilter === 'completed') return isDone;
+                        return true;
+                    });
+
+                    if (filteredItems.length > 0) {
+                        hasVisibleItems = true;
+                        subSectionsHTML += `
+                            <div>
+                                <h3 class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 border-b border-stone-100 pb-1">${sub.title}</h3>
+                                <div class="space-y-2">
+                        `;
+
+                        filteredItems.forEach(item => {
+                            const isChecked = localState[item.id];
+                            subSectionsHTML += `
+                                <div id="row-${item.id}" onclick="toggleItem('${item.id}')" class="flex items-start gap-3 p-3 rounded-xl border border-stone-100 hover:border-stone-200 hover:bg-stone-50/50 cursor-pointer transition-all duration-200 ${isChecked ? 'bg-stone-50/70 opacity-70' : ''}">
+                                    <div id="check-${item.id}" class="w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 transition-all ${isChecked ? 'bg-teal-600 border-teal-600' : 'border-stone-300 bg-white'}">
+                                        <span id="icon-${item.id}" class="text-white text-[10px] font-bold ${isChecked ? '' : 'hidden'}">&#10003;</span>
+                                    </div>
+                                    <span class="text-sm font-medium text-stone-700 leading-relaxed">${item.text}</span>
+                                </div>
+                            `;
+                        });
+
+                        subSectionsHTML += `
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                headerHTML += subSectionsHTML + '</div>';
+                phaseCard.innerHTML = headerHTML;
+
+                // Only append Phase card if it contains items matching filters
+                if (hasVisibleItems) {
+                    container.appendChild(phaseCard);
+                }
+            });
+
+            // Fallback for empty filter states
+            if (container.children.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 bg-white rounded-2xl border border-stone-200">
+                        <span class="text-3xl">🏜️</span>
+                        <h4 class="text-stone-800 font-bold mt-3">No matching items found</h4>
+                        <p class="text-stone-500 text-xs mt-1">Try switching your active status filter to 'All Tasks'.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Calculate and update global progress counters
+        function calculateProgress() {
+            let total = 0;
+            let completed = 0;
+
+            checklistData.phases.forEach(phase => {
+                phase.subsections.forEach(sub => {
+                    sub.items.forEach(item => {
+                        total++;
+                        if (localState[item.id]) {
+                            completed++;
+                        }
+                    });
+                });
+            });
+
+            const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('overall-percentage').textContent = `${pct}%`;
+            document.getElementById('completed-count').textContent = completed;
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('progress-bar-fill').style.width = `${pct}%`;
+        }
+
+        // Reset functions handling modal trigger
+        function openResetModal() {
+            document.getElementById('reset-modal').classList.remove('hidden');
+        }
+
+        function closeResetModal() {
+            document.getElementById('reset-modal').classList.add('hidden');
+        }
+
+        function resetChecklist() {
+            localStorage.removeItem('holland_alan_state');
+            localStorage.removeItem('holland_alan_notes');
+            document.getElementById('onsite-notes').value = '';
+            loadState();
+            calculateProgress();
+            renderChecklist();
+            closeResetModal();
+        }
+
+        // Initial launch logic
+        window.onload = function() {
+            loadState();
+            calculateProgress();
+            renderNavigationTabs();
+            renderChecklist();
+        };
+    </script>
+</body>
+</html>
